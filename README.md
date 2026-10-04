@@ -12,12 +12,30 @@ Companion project to
 > n and N − n are both sums of two squares and Ω(n(N − n)) ≤ 11 is at least (3/2)·𝔖(N)·N/(log N)²,
 > where 𝔖(N) is the binary Goldbach singular series.
 
+> **Corollary.** For the same N, at least (3/5)·𝔖(N)·N/(log N)² such n satisfy
+> max(Ω(n), Ω(N − n)) ≤ 8 (and Ω(n(N − n)) ≤ 12).
+
+> **Theorem 1.2.** The same holds for the principal form Q_Δ of each of the nine imaginary quadratic fields
+> of class number one, with Ω(n(N − n)) ≤ k_Δ(N) and count ≫_Δ 𝔖(N)N/(log N)², N even:
+
+| Δ | Q_Δ | k_Δ(N) = 11 | k_Δ(N) = 12, 13 |
+|---|---|---|---|
+| −3 | x² + xy + y² | N ≡ 2 (mod 3) | 12: N ≡ 1 (mod 3); 13: N ≡ 6 (mod 9) |
+| −4 | x² + y² | N ≡ 2 (mod 4) | 13: N ≡ 4 (mod 8) |
+| −7 | x² + xy + 2y² | 7 ∤ N | 13: 7 ∥ N |
+| −8 | x² + 2y² | v₂(N) ≤ 2 | 13: v₂(N) = 3 |
+| −11, −19, −43, −67, −163 | x² + xy + ((1−Δ)/4)y² | r ∤ N | 13: r ∥ N |
+
+The extra prime factors are forced powers of the ramified prime r (code/local_conditions.py).
+The main term and the switching term carry the same factor for every modulus M, so the certified
+inequality applies to all nine Δ (Section 5 of the paper).
+
 For N ≢ 2 (mod 4) the prime 2 forces extra factors of 2 (for N = 2^j the only representation is
 n₁ = n₂ = 2^{j−1}), so a general statement should count the prime factors of the odd parts only.
 
 ## Status
 
-Draft preprint (paper/, 5 pages). The final numerical inequality is certified with outward-rounded
+Draft preprint (paper/, 9 pages). The final numerical inequality is certified with outward-rounded
 interval arithmetic. The sieve lemmas are written out in the draft but have **not yet been independently
 refereed**. A web literature search (Hooley, Indlekofer, Blomer, Brüdern–Fouvry, Blomer–Grimmelt–Li–Rydin
 Myerson) found no overlapping result; a database (MathSciNet/zbMATH) search has not been done.
@@ -29,7 +47,9 @@ Myerson) found no overlapping result; a database (MathSciNet/zbMATH) search has 
 | 0.245 | 0.016 | 1/8 | 1/2 | **11** | 0.944016 | 2.830154 | 1.067736 | 1.134620 | **+0.038949** | 1.504 |
 | 0.22 | 0.010 | 1/8 | 2/5 | 12 | 0.913373 | 3.144708 | 1.092388 | 1.166735 | **+0.039811** | 2.241 |
 
-Here k = ⌈1/λ + 2/β₁⌉ − 1, computed in exact rational arithmetic; "constant" is the lower bound for
+| 0.24 | 0.022 | 89/500 | 3/10 | 12 (max side **8**) | 0.919835 | 1.939896 | 0.878693 | 1.166966 | **+0.022031** | 0.607 |
+
+Here k = ⌈1/λ + 2/β₁⌉ − 1 and the side bound is ⌈1/λ + 1/β₁⌉ − 1, computed in exact rational arithmetic; "constant" is the lower bound for
 (number of n)/(𝔖(N) N/(log N)²).
 
 ## Method in brief
@@ -53,10 +73,12 @@ singular series cancels exactly. Richert's weights act on n(N − n) jointly.
 ## Layout
 
 ```
-paper/Chen2026b_BilateralTwoSquares.tex / .pdf   draft paper (6 pages)
+paper/Chen2026b_BilateralTwoSquares.tex / .pdf   draft paper (9 pages)
 paper/figure1_linear_sieve.pdf, figure2_switching_domain.pdf   Figures 1-2 (vector PDF)
 code/plot_figures.py   regenerates Figures 1-2 (illustrative, floating point)
-code/certify.py        interval-arithmetic certification of both parameter sets (~15 s)
+code/certify.py        interval-arithmetic certification of the three parameter sets (~20 s)
+code/local_conditions.py  local conditions for the nine discriminants (Table 3 of the paper)
+code/scan_beta1.py     joint and per-side Omega bounds, Richert range beta1 up to 0.95 (no gain)
 code/sieve_core.py     floating-point sieve functions and switching density
 code/scan.py           schemes S1-S3 and parameter scan (~40 s)
 results/               outputs of certify.py and scan.py

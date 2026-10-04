@@ -1,0 +1,9 @@
+﻿D=   -3 (r=3): k=11: 3 classes of N mod 9; k=12: 3 classes of N mod 9 [1, 4, 7]; k=13: 1 classes of N mod 9 [6]; k=14: 1 classes of N mod 9 [3]; none: 1 classes of N mod 9
+D=   -4 (r=2): k=11: N = [2, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62] mod 64; k=13: N = [4, 12, 20, 28, 36, 44, 52, 60] mod 64; k=15: N = [8, 24, 40, 56] mod 64; k=17: N = [16, 48] mod 64; k=19: N = [32] mod 64; none: N = [0] mod 64
+D=   -7 (r=7): k=11: 42 classes of N mod 49; k=13: 6 classes of N mod 49 [7, 14, 21, 28, 35, 42]; none: 1 classes of N mod 49
+D=   -8 (r=2): k=11: N = [2, 4, 6, 10, 12, 14, 18, 20, 22, 26, 28, 30, 34, 36, 38, 42, 44, 46, 50, 52, 54, 58, 60, 62] mod 64; k=13: N = [8, 24, 40, 56] mod 64; k=15: N = [16, 48] mod 64; k=17: N = [32] mod 64; none: N = [0] mod 64
+D=  -11 (r=11): k=11: 110 classes of N mod 121; k=13: 10 classes of N mod 121 [11, 22, 33, 44, 55, 66, 77, 88]; none: 1 classes of N mod 121
+D=  -19 (r=19): count formula verified mod 19: True  => k=11 if 19 does not divide N, k=13 if 19 || N (both sides divisible by 19)
+D=  -43 (r=43): count formula verified mod 43: True  => k=11 if 43 does not divide N, k=13 if 43 || N (both sides divisible by 43)
+D=  -67 (r=67): count formula verified mod 67: True  => k=11 if 67 does not divide N, k=13 if 67 || N (both sides divisible by 67)
+D= -163 (r=163): count formula verified mod 163: True  => k=11 if 163 does not divide N, k=13 if 163 || N (both sides divisible by 163)

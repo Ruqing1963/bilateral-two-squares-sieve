@@ -1,0 +1,2 @@
+﻿beta1 <= 0.5  : joint Omega(n1 n2) <= 11 (delta, alpha, lam, beta1 = (0.22, 0.02, 0.1277, 0.48));  max side Omega(n_i) <= 8 ((0.24, 0.022, 0.1778, 0.3))
+beta1 <= 0.95 : joint Omega(n1 n2) <= 11 (delta, alpha, lam, beta1 = (0.22, 0.02, 0.1277, 0.48));  max side Omega(n_i) <= 8 ((0.24, 0.022, 0.1778, 0.3))

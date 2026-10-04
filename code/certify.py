@@ -106,8 +106,11 @@ def certify(delta_s, alpha_s, lam, beta1, label):
     al_iv = iv.mpf(Fraction(alpha_s).numerator) / Fraction(alpha_s).denominator
     bound = 1 / Fraction(str(lam)) + 2 / Fraction(str(beta1))
     k = int(-(-bound // 1)) - 1                            # Omega < bound  =>  Omega <= ceil(bound) - 1
+    side = 1 / Fraction(str(lam)) + 1 / Fraction(str(beta1))   # each side: T_other >= 0
+    ks = min(int(-(-side // 1)) - 1, k - 1)
     print(f"\n=== {label}: delta={delta_s}, alpha={alpha_s}, lam={lam}, beta1={beta1};"
-          f" 1/lam + 2/beta1 = {bound} => Omega(n1 n2) <= {k} ===")
+          f" 1/lam + 2/beta1 = {bound} => Omega(n1 n2) <= {k};"
+          f" 1/lam + 1/beta1 = {side} ~ {float(side):.4f} => max Omega(n_i) <= {ks} ===")
 
     # ---- L (lower) ----
     best = None
@@ -163,7 +166,7 @@ def certify(delta_s, alpha_s, lam, beta1, label):
     pref = 4 * EG_iv * iv.sqrt(al_iv * ey_iv)
     bad_hi = up(up(float(pref.b) * c_hi) * Us)
 
-    net_lo = dn(dn(L_lo - up(lam * R_hi)) - bad_hi)
+    net_lo = dn(dn(L_lo - up(up(lam * (1 + 2.0 ** -50)) * R_hi)) - bad_hi)   # lam rounded up
     scale = iv.exp(-2 * iv.euler) / (2 * al_iv * ey_iv)
     print(f"theta_I = {tI:.4f} (s_I = {sI:.4f}, s_S = {sS:.2f})")
     print(f"L   >= {L_lo:.6f}")
@@ -180,3 +183,4 @@ def certify(delta_s, alpha_s, lam, beta1, label):
 if __name__ == "__main__":
     certify("0.22", "0.010", 0.125, 0.40, "k = 12")
     certify("0.245", "0.016", 0.125, 0.50, "k = 11")
+    certify("0.24", "0.022", 0.178, 0.30, "max side 8")

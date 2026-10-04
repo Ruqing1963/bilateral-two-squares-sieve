@@ -7,6 +7,7 @@
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 
@@ -34,7 +35,9 @@ of the sequence $n(N-n)$ is $1$, but sifting the primes $q\equiv 3\pmod 4$ up to
 sieve falls exactly on the sieving limit $s=2$. We therefore sift these primes only up to $N^{1/2-\delta}$
 and remove the survivors with two large prime factors $\equiv 3\pmod 4$ on the same side by a switching
 argument at the Bombieri--Vinogradov level. The final numerical inequality is verified with interval
-arithmetic.
+arithmetic. The same method gives $\max(\Omega(n),\Omega(N-n))\le 8$ for a positive proportion of the
+expected number of $n$, and extends to the principal forms of all nine imaginary quadratic fields of class
+number one, with the bound $11$ whenever $N$ is not divisible by a high power of the ramified prime.
 \end{abstract}
 
 \maketitle
@@ -77,6 +80,39 @@ With the parameters of the second line of Table~\ref{tab:cert} the same method g
 $\Omega(n(N-n))\le 12$ with the larger constant $2.24$ in place of $\frac32$; both are certified.
 \end{remark}
 
+The weights of Section~\ref{sec:switch} also control each side separately.
+
+\begin{corollary}\label{cor:side}
+For every sufficiently large $N\equiv2\pmod4$, the number of $n\le N$, $n\equiv1\pmod 4$, such that $n$ and
+$N-n$ are sums of two squares, $\max(\Omega(n),\Omega(N-n))\le 8$ and $\Omega(n(N-n))\le12$, is at least
+$\frac35\,\Sg(N)N/(\log N)^2$.
+\end{corollary}
+
+The method is not specific to $x^2+y^2$. Let $\Delta<0$ be a fundamental discriminant with class number
+$h(\Delta)=1$, that is $\Delta\in\{-3,-4,-7,-8,-11,-19,-43,-67,-163\}$, let $Q_\Delta$ be the principal
+binary quadratic form of discriminant $\Delta$, and let $r$ be the prime ramified in $\mathbb Q(\sqrt\Delta)$.
+
+\begin{theorem}\label{thm:general}
+Let $N$ be a sufficiently large even integer. Then
+\[
+\#\{n\le N:\ n=Q_\Delta(x,y),\ N-n=Q_\Delta(z,w),\ \Omega(n(N-n))\le k_\Delta(N)\}
+\ \gg_\Delta\ \Sg(N)\,\frac{N}{(\log N)^2},
+\]
+where $k_\Delta(N)=11$ in each of the following cases:
+$\Delta=-4$ and $N\equiv2\ (\mathrm{mod}\ 4)$;
+$\Delta=-8$ and $v_2(N)\le2$;
+$\Delta=-3$ and $N\equiv2\ (\mathrm{mod}\ 3)$;
+$\Delta=-r$ with $r\ge7$ and $r\nmid N$.
+Moreover $k_{-3}(N)=12$ if $N\equiv1\pmod 3$, and $k_\Delta(N)=13$ in the cases
+$\Delta=-4$, $N\equiv4\ (\mathrm{mod}\ 8)$;
+$\Delta=-8$, $v_2(N)=3$;
+$\Delta=-3$, $N\equiv6\ (\mathrm{mod}\ 9)$;
+$\Delta=-r$ with $r\ge7$ and $r\,\|\,N$.
+\end{theorem}
+
+The extra prime factors in the second list are forced: they are powers of the ramified prime that every
+representation must contain (Lemma~\ref{lem:admissible}). The proof is given in Section~\ref{sec:general}.
+
 \subsection*{Method}
 Restrict to $n\equiv1\pmod4$; then $N-n\equiv1\pmod4$. If neither $n$ nor $N-n$ has a prime factor
 $q\equiv3\pmod 4$, both are sums of two squares. The sequence $\{n(N-n)\}$ has level of distribution
@@ -89,7 +125,8 @@ are counted from above by switching (Section~\ref{sec:switch}). Prime factors ar
 weights applied to $n(N-n)$ jointly.
 
 \begin{remark}
-To the best of the author's knowledge, Theorem~\ref{thm:main} has not appeared in the literature.
+To the best of the author's knowledge, Theorems~\ref{thm:main} and~\ref{thm:general} have not appeared in
+the literature.
 \end{remark}
 
 %=====================================================================================================
@@ -184,13 +221,16 @@ sides there are none, or they coincide, both sides are sums of two squares. Othe
 
 \begin{lemma}[Prime factors]\label{lem:omega}
 If $a_n$ is as in Lemma~\ref{lem:structure}(i), squarefree, and $w_n>0$, then
-$\Omega(n(N-n))<1/\lambda+2/\beta_1$.
+$\Omega(n(N-n))<1/\lambda+2/\beta_1$ and $\max(\Omega(n),\Omega(N-n))<1/\lambda+1/\beta_1$.
 \end{lemma}
 
 \begin{proof}
-All prime factors of $a_n$ are in $\cP_1$ and $\ge z$, and $\log a_n\le 2\log N$. As in
-\cite[Lemma~3.2]{Chen1},
-$\sum_{q\mid a_n,\,q<y_1}(1-\log q/\log y_1)\ge\Omega(a_n)-\log a_n/\log y_1\ge\Omega(a_n)-2/\beta_1$.
+All prime factors of $a_n$ are in $\cP_1$ and $\ge z$, and since $a_n$ is squarefree each of them divides
+exactly one of $n$, $N-n$. Write $w_n=1-\lambda(T_1+T_2)$, where $T_1$, $T_2$ are the sums over $q\mid n$ and
+$q\mid N-n$. Each $T_i$ is a sum of non-negative terms, and as in \cite[Lemma~3.2]{Chen1},
+$T_1\ge\Omega(n)-\log n/\log y_1\ge\Omega(n)-1/\beta_1$, and similarly for $T_2$. Now $w_n>0$ gives
+$T_1+T_2<1/\lambda$, which implies both $\Omega(n(N-n))-2/\beta_1<1/\lambda$ and, since $T_2\ge0$,
+$\Omega(n)-1/\beta_1<1/\lambda$; the same holds for $N-n$.
 \end{proof}
 
 Non-squarefree $a_n$ with a square factor $q^2$, $q\ge z$, number $\ll N^{1-\alpha}$ and are negligible.
@@ -303,8 +343,25 @@ $\theta_I=0.9220$ resp.\ $0.9495$.}
 \label{tab:cert}
 \end{table}
 
+For Corollary~\ref{cor:side} we use $\delta=0.24$, $\alpha=0.022$, $\lambda=89/500$, $\beta_1=3/10$, so that
+$1/\lambda+1/\beta_1=2390/267<9$ and $1/\lambda+2/\beta_1=3280/267<13$.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccccccccc}
+\hline
+$\theta_I$ & $\max\Omega(n_i)$ & $\Omega(n_1n_2)$ & $L\ge$ & $R\le$ & $c\le$ & $U\le$ & $\mathrm{net}\ge$ & constant\\
+\hline
+$0.8965$ & $8$ & $12$ & $0.919835$ & $1.939896$ & $0.878693$ & $1.166966$ & $0.022031$ & $0.6070$\\
+\hline
+\end{tabular}
+\medskip
+\caption{Certified bounds for the parameters of Corollary~\ref{cor:side}.}
+\label{tab:side}
+\end{table}
+
 \begin{lemma}\label{lem:numerics}
-The bounds of Table~\ref{tab:cert} hold.
+The bounds of Tables~\ref{tab:cert} and~\ref{tab:side} hold.
 \end{lemma}
 
 \begin{proof}[Method of verification]
@@ -343,6 +400,100 @@ after removing the $\ll N^{1-\alpha}$ non-squarefree $a_n$, the number of counte
 for large $N$ (the numerical constant is $\ge1.5046$). Each of them has $n$ and $N-n$ sums of two squares
 and $\Omega(n(N-n))\le 11$.
 \end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:side}]
+The same argument with the parameters of Table~\ref{tab:side} gives at least
+\[
+\bigl(0.022031+o(1)\bigr)\frac{e^{-2\gamma}}{2\cdot0.022\cdot0.26}\,\Sg(N)\frac{N}{(\log N)^2}
+\ \ge\ \frac35\,\Sg(N)\frac{N}{(\log N)^2}
+\]
+counted $n$ (the numerical constant is $\ge0.607$), and Lemma~\ref{lem:omega} gives $\max(\Omega(n),\Omega(N-n))\le8$ and $\Omega(n(N-n))\le12$.
+\end{proof}
+
+%=====================================================================================================
+\section{Other class number one forms}\label{sec:general}
+
+Let $\Delta$, $Q_\Delta$, $r$ be as in Theorem~\ref{thm:general} and $\chi=\chi_\Delta$ the Kronecker symbol.
+An integer $m\ge1$ is represented by $Q_\Delta$ if and only if every prime $q$ with $\chi(q)=-1$ divides $m$
+to an even power; the represented integers are the norms from $\mathcal O_{\mathbb Q(\sqrt\Delta)}$ and form a
+multiplicative set containing $r$ \cite[Lemma~6.1]{Chen1}. For $u$ coprime to $\Delta$,
+$\chi(u)=(-1)^{\#\{\text{inert prime factors of }u\}}$ (with multiplicity).
+
+\begin{lemma}[Admissible classes]\label{lem:admissible}
+Let $N$ be even and in one of the cases of Theorem~\ref{thm:general}, and let $\kappa_\Delta(N)=k_\Delta(N)-11$.
+There are a modulus $M$, divisible by $2$ and by $r$, and a class $a\bmod M$ such that every $n\equiv a\pmod M$
+satisfies $n=e\,u$, $N-n=e'u'$, where $e,e'$ are fixed powers of $r$ with $\Omega(ee')=\kappa_\Delta(N)$, the
+integers $u,u'$ are coprime to $2r$, and $\chi(u)=\chi(u')=1$. Moreover, $r$ divides $M/e$ and $M/e'$.
+\end{lemma}
+
+\begin{proof}
+Let $r$ be odd, so $\Delta=-r$ with $r\equiv3\pmod4$ and $\chi(u)=(u/r)$ for odd $u$. For $N'\not\equiv0\pmod r$,
+\[
+\#\{t\bmod r:\ (t/r)=((N'-t)/r)=1\}=\frac14\sum_{t\ne0,N'}\Bigl(1+\bigl(\tfrac tr\bigr)\Bigr)\Bigl(1+\bigl(\tfrac{N'-t}r\bigr)\Bigr)
+=\frac{r-1-2(N'/r)}{4},
+\]
+since $\sum_t\bigl(\frac{t(N'-t)}r\bigr)=-\bigl(\frac{-1}r\bigr)=1$. This is $\ge1$ for $r\ge7$, and for $r=3$ it is
+$1$ if $N'\equiv2$ and $0$ if $N'\equiv1\pmod 3$. If $r\nmid N$, take $N'=N$ and $e=e'=1$. If $r\,\|\,N$, then
+$(n/r)=((N-n)/r)=1$ with $r\nmid n$ is impossible because $(-1/r)=-1$, so $r$ divides both sides; take $e=e'=r$
+and $N'=N/r$. For $\Delta=-3$ and $N\equiv1\pmod3$ take $e=3$, $e'=1$, $n\equiv3\pmod9$; then
+$u\equiv1$ and $N-n\equiv1\pmod 3$. For $\Delta=-3$, $N\equiv6\pmod9$ take $e=e'=3$ and $N'=N/3\equiv2$. In all
+cases add the condition $n$ odd. For $\Delta=-4$: if $N\equiv2\pmod4$ take $n\equiv1\pmod4$; if $N\equiv4\pmod 8$
+take $n\equiv2\pmod8$, so that $n/2\equiv N/2-n/2\equiv1\pmod4$. For $\Delta=-8$, where $\chi(u)=1$ iff
+$u\equiv1,3\pmod 8$: if $v_2(N)\le2$ take $n\equiv1$ or $3\pmod 8$ with $N-n\equiv1$ or $3\pmod8$; if
+$v_2(N)=3$ take $n\equiv2\pmod{16}$, so that $n/2\equiv1$ and $(N-n)/2\equiv3\pmod 8$. We have checked by
+enumeration (script \texttt{code/local\_conditions.py}) that these are the minimal costs.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:general}]
+Let $M,a,e,e'$ be as in Lemma~\ref{lem:admissible}, $\cA_\Delta=\{a_n=n(N-n):\ n\le N,\ n\equiv a\ (M)\}$ and
+$X=N/M$. For $d$ coprime to $M$, $d\mid a_n$ restricts $n$ to $\rho(d)$ classes modulo $Md$, so
+Lemma~\ref{lem:level} holds unchanged. We sift by the primes $q\nmid M$, with $\cP_3$, $\cP_1$ replaced by the
+inert and split primes; both have density $1/2$ by Dirichlet's theorem modulo $|\Delta|$. Lemma~\ref{lem:structure}
+holds for $u,u'$ (each has an even number of inert prime factors, all $\ge y$, and $y^4>N$), and
+Lemma~\ref{lem:omega} applied to $uu'$ gives $\Omega(uu')\le11$, so $\Omega(n(N-n))\le 11+\kappa_\Delta(N)$.
+
+It remains to check the normalisation. Put $\Sg_M(N)=\prod_{q\nmid M}(1-g(q))(1-1/q)^{-2}$. Since
+$\prod_{q<z,\,q\nmid M}(1-1/q)\sim\frac{M}{\varphi(M)}\frac{e^{-\gamma}}{\log z}$,
+\[
+XV\sim\frac{M}{\varphi(M)^2}\,\Sg_M(N)\,\frac{e^{-2\gamma}}{\alpha(1/2-\delta)}\,\frac{N}{(\log N)^2}.
+\]
+In the switching step for the side $n=e\,t$, the triples $t=q_1q_2m$ satisfy $\chi(t)=1$ automatically and must
+lie in one prescribed class modulo $M/e$ with $\chi=1$; by the prime number theorem in progressions they are
+equidistributed among the $\varphi(M/e)/2$ such classes, and $t\le N/e$. Since $r\mid M/e$ we have
+$e\,\varphi(M/e)=\varphi(M)$, so $|\cT|=(2/\varphi(M)+o(1))\,c(\delta,\alpha)N/\log N$. For $\ell\nmid M$, $\ell\mid N-et$
+with density $1/(\ell-1)$ if $\ell\nmid N$ and $0$ if $\ell\mid N$; these are the local factors of $\Sg_M(N)$, and
+\[
+\prod_{q\mid P}(1-g_\cB(q))\sim\frac{M}{\varphi(M)}\,\Sg_M(N)\,\frac{e^{-\gamma}}{\log z}
+\Bigl(\frac{\log z}{\log y}\Bigr)^{1/2}.
+\]
+Hence the contribution of this side is at most
+$\bigl(2c\,e^{\gamma}\sqrt{\alpha(1/2-\delta)}\,U+o(1)\bigr)XV$, exactly as in Proposition~\ref{prop:switch},
+and the same holds for the side $N-n=e't$. The Richert terms scale with $XV$ as before. Therefore the
+normalised quantity is the same $\mathrm{net}$ as in Section~\ref{sec:numerics}, independently of $\Delta$ and
+of the case, and Lemma~\ref{lem:numerics} gives a count $\ge(0.0389+o(1))XV\gg_\Delta\Sg(N)N/(\log N)^2$,
+since $\Sg_M(N)$ and $\Sg(N)$ differ only in the local factors at the primes dividing $M$. For $\Delta=-4$,
+$M=4$, one has $\frac{M}{\varphi(M)^2}\Sg_M(N)=\frac12\Sg(N)$, recovering Proposition~\ref{prop:W}.
+\end{proof}
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{llll}
+\hline
+$\Delta$ & $Q_\Delta$ & $k_\Delta(N)=11$ & $k_\Delta(N)=12,13$\\
+\hline
+$-3$ & $x^2+xy+y^2$ & $N\equiv2\ (3)$ & $12$: $N\equiv1\ (3)$;\ $13$: $N\equiv6\ (9)$\\
+$-4$ & $x^2+y^2$ & $N\equiv2\ (4)$ & $13$: $N\equiv4\ (8)$\\
+$-7$ & $x^2+xy+2y^2$ & $7\nmid N$ & $13$: $7\,\|\,N$\\
+$-8$ & $x^2+2y^2$ & $v_2(N)\le2$ & $13$: $v_2(N)=3$\\
+$-11,-19,-43,-67,-163$ & $x^2+xy+\frac{1-\Delta}{4}y^2$ & $r\nmid N$ & $13$: $r\,\|\,N$\\
+\hline
+\end{tabular}
+\medskip
+\caption{The bound $k_\Delta(N)$ of Theorem~\ref{thm:general} ($N$ even). Higher powers of the ramified prime
+in $N$ force further factors of $r$ and are not covered.}
+\label{tab:general}
+\end{table}
 
 \section*{Data and code availability}
 The verification script \texttt{certify.py}, the exploratory scan and their outputs are archived at

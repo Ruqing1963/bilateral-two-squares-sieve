@@ -1,7 +1,7 @@
 ﻿linear:      F(3) in [1.187382,1.187382], f(4) in [0.978354,0.978354], F(110) <= 1.000066, f(110) >= 0.999935
 semi-linear: F(2.5) in [1.014930,1.015106], f(60) >= 0.999952
 
-=== k = 12: delta=0.22, alpha=0.010, lam=0.125, beta1=0.4; 1/lam + 2/beta1 = 13 => Omega(n1 n2) <= 12 ===
+=== k = 12: delta=0.22, alpha=0.010, lam=0.125, beta1=0.4; 1/lam + 2/beta1 = 13 => Omega(n1 n2) <= 12; 1/lam + 1/beta1 = 21/2 ~ 10.5000 => max Omega(n_i) <= 10 ===
 theta_I = 0.9495 (s_I = 3.3911, s_S = 5.05)
 L   >= 0.913373
 R   <= 3.144708
@@ -11,7 +11,7 @@ bad <= 0.480474
 certified:  net >= +0.039811   ->  POSITIVE
 lower bound constant: #reps >= 2.24106 * S(N) N/(log N)^2 * (1+o(1))
 
-=== k = 11: delta=0.245, alpha=0.016, lam=0.125, beta1=0.5; 1/lam + 2/beta1 = 12 => Omega(n1 n2) <= 11 ===
+=== k = 11: delta=0.245, alpha=0.016, lam=0.125, beta1=0.5; 1/lam + 2/beta1 = 12 => Omega(n1 n2) <= 11; 1/lam + 1/beta1 = 10 ~ 10.0000 => max Omega(n_i) <= 9 ===
 theta_I = 0.9220 (s_I = 3.6157, s_S = 4.88)
 L   >= 0.944016
 R   <= 2.830154
@@ -20,3 +20,13 @@ U_side <= 1.134620
 bad <= 0.551298
 certified:  net >= +0.038949   ->  POSITIVE
 lower bound constant: #reps >= 1.50469 * S(N) N/(log N)^2 * (1+o(1))
+
+=== max side 8: delta=0.24, alpha=0.022, lam=0.178, beta1=0.3; 1/lam + 2/beta1 = 3280/267 => Omega(n1 n2) <= 12; 1/lam + 1/beta1 = 2390/267 ~ 8.9513 => max Omega(n_i) <= 8 ===
+theta_I = 0.8965 (s_I = 3.4481, s_S = 4.70)
+L   >= 0.919835
+R   <= 1.939896
+c   <= 0.878693
+U_side <= 1.166966
+bad <= 0.552503
+certified:  net >= +0.022031   ->  POSITIVE
+lower bound constant: #reps >= 0.60707 * S(N) N/(log N)^2 * (1+o(1))
