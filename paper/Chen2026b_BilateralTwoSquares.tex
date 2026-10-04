@@ -9,6 +9,14 @@
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\Sg}{\mathfrak{S}}
+\newcommand{\verify}[1]{\textbf{[verify: #1]}}
+
 \title[Sums of two almost prime sums of two squares]{Even integers as sums of two sums of two squares
 with few prime factors}
 \author{Ruqing Chen}
@@ -18,31 +26,262 @@ with few prime factors}
 \begin{document}
 
 \begin{abstract}
-DRAFT SKELETON. No result is claimed yet; see \texttt{code/scan.py} and \texttt{results/}.
+DRAFT. Let $N\equiv 2\pmod 4$ be sufficiently large. We show that the number of $n\le N$ such that $n$
+and $N-n$ are both sums of two squares and $\Omega(n(N-n))\le 12$ is at least
+$2\,\Sg(N)N/(\log N)^2$, where $\Sg(N)$ is the binary Goldbach singular series. The level of distribution
+of the sequence $n(N-n)$ is $1$, but sifting the primes $q\equiv 3\pmod 4$ up to $N^{1/2}$ with the linear
+sieve falls exactly on the sieving limit $s=2$. We therefore sift these primes only up to $N^{1/2-\delta}$
+and remove the survivors with two large prime factors $\equiv 3\pmod 4$ on the same side by a switching
+argument at the Bombieri--Vinogradov level. The final numerical inequality is verified with interval
+arithmetic.
 \end{abstract}
 
 \maketitle
 
+%=====================================================================================================
 \section{Introduction}
-% Problem: N = n_1 + n_2 with n_1, n_2 sums of two squares and Omega(n_1 n_2) <= k, N = 2 (mod 4).
-% Remark on the prime 2: for N = 2^j the only representation is n_1 = n_2 = 2^{j-1}.
-% Literature: Hooley / Indlekofer (n, n+h both sums of two squares), Brudern--Fouvry, Chen.
 
-\section{The sequence $n(N-n)$ and its level of distribution}
-% |r_d| <= rho(d); level N^{1-eps}, shared by all sieve components (CRT).
+Every positive integer is a sum of four squares, so every $N$ is of the form $n_1+n_2$ with $n_1,n_2$
+sums of two squares. We ask for such representations in which $n_1$ and $n_2$ have few prime factors.
+This is a two-sided analogue of the problem treated in \cite{Chen1}, where one summand is a prime and
+the other an almost prime sum of two squares, and of the classical problem of pairs $n$, $n+h$ of sums of
+two squares \cite{Hooley,Indlekofer}.
 
-\section{The vector sieve and the $s=2$ threshold}
-% Linear sieve on inert primes of n(N-n): sifting to sqrt N at level N gives s = 2, f_1(2) = 0.
+\begin{theorem}\label{thm:main}
+For every sufficiently large $N\equiv 2\pmod 4$,
+\begin{multline*}
+\#\{n\le N:\ n\equiv 1\ (\mathrm{mod}\ 4),\ n=x^2+y^2,\ N-n=z^2+w^2,\ \Omega(n(N-n))\le 12\}\\
+\ge\ 2\,\Sg(N)\,\frac{N}{(\log N)^2},
+\end{multline*}
+where $\Sg(N)=2\prod_{\ell>2}\bigl(1-(\ell-1)^{-2}\bigr)\prod_{\ell\mid N,\,\ell>2}\frac{\ell-1}{\ell-2}$.
+\end{theorem}
 
-\section{Switching}
-% Survivors with two inert factors >= N^{1/2-delta}; upper bound sieve on {N - q_1 q_2 m} at level 1/2.
+\begin{remark}[The prime $2$]
+The restriction $N\equiv2\pmod4$ is natural. The odd part of a sum of two squares is $\equiv1\pmod 4$.
+If $N\equiv0\pmod 4$, both summands must contain powers of $2$, and for $N=2^j$ the only representation is
+$n_1=n_2=2^{j-1}$, so $\Omega(n_1n_2)$ is unbounded. For general $N$ one should count prime factors of the
+odd parts only; we do not pursue this here.
+\end{remark}
 
-\section{Numerical verification}
-% To be written after the scheme is fixed (interval arithmetic as in the companion paper).
+\begin{remark}
+Floating point computations (not certified) indicate that the same method gives $\Omega(n(N-n))\le 11$
+when $\delta$ is taken close to $1/4$.
+\end{remark}
+
+\subsection*{Method}
+Restrict to $n\equiv1\pmod4$; then $N-n\equiv1\pmod4$. If neither $n$ nor $N-n$ has a prime factor
+$q\equiv3\pmod 4$, both are sums of two squares. The sequence $\{n(N-n)\}$ has level of distribution
+$N^{1-\varepsilon}$ (Lemma~\ref{lem:level}), and the primes $q\equiv3\pmod4$ have two roots of
+$n(N-n)\equiv0\pmod q$, so they form a sifting set of dimension $1$. Sifting them up to $N^{1/2}$ at level
+$N$ gives $s=2$, where the linear lower bound function vanishes. We sift them up to $y=N^{1/2-\delta}$ instead.
+Since $n\equiv N-n\equiv1\pmod 4$, each side has an even number of such prime factors, so a survivor that is
+not a pair of sums of two squares has two large prime factors $\equiv3\pmod4$ on the \emph{same} side; these
+are counted from above by switching (Section~\ref{sec:switch}). Prime factors are controlled by Richert's
+weights applied to $n(N-n)$ jointly.
+
+\begin{remark}
+The literature has not yet been checked systematically for this statement.
+\end{remark}
+
+%=====================================================================================================
+\section{The sequence $n(N-n)$}\label{sec:level}
+
+Let $N\equiv 2\pmod 4$ be large, $\cP_1=\{q\equiv1\pmod4\}$, $\cP_3=\{q\equiv3\pmod4\}$, and
+\[
+\cA=\{\,a_n=n(N-n):\ 1\le n\le N,\ n\equiv1\ (\mathrm{mod}\ 4)\,\},\qquad X=N/4.
+\]
+For odd squarefree $d$ let $\rho(d)$ be the number of solutions of $n(N-n)\equiv0\pmod d$; it is
+multiplicative with $\rho(q)=2$ for $q\nmid N$ and $\rho(q)=1$ for $q\mid N$. Put $g(d)=\rho(d)/d$, so that
+\[
+g(q)=\frac2q\quad(q\nmid N),\qquad g(q)=\frac1q\quad(q\mid N),
+\]
+and define $r_d$ by $\#\{n:\ a_n\in\cA,\ d\mid a_n\}=Xg(d)+r_d$.
+
+\begin{lemma}[Level of distribution]\label{lem:level}
+$|r_d|\le\rho(d)$, and for $D\le N$,
+$\sum_{d\le D}\mu^2(d)\tau_3(d)|r_d|\ll D(\log D)^{C}$. In particular the level of distribution is
+$N^{1-\varepsilon}$.
+\end{lemma}
+
+\begin{proof}
+The condition $d\mid a_n$ together with $n\equiv1\pmod 4$ restricts $n$ to $\rho(d)$ classes modulo $4d$,
+each containing $N/(4d)+O(1)$ integers $n\le N$. Hence $|r_d|\le\rho(d)\le 2^{\omega(d)}$, and the sum is
+$\ll\sum_{d\le D}\tau_3(d)2^{\omega(d)}\ll D(\log D)^{C}$.
+\end{proof}
+
+\begin{lemma}[Local factors]\label{lem:local}
+As $z\to\infty$,
+\[
+\prod_{2<q<z}(1-g(q))\sim\frac{\Sg(N)}{2}\Bigl(\frac{2e^{-\gamma}}{\log z}\Bigr)^2 .
+\]
+\end{lemma}
+
+\begin{proof}
+For $q\nmid N$, $(1-2/q)(1-1/q)^{-2}=1-(q-1)^{-2}$; for $q\mid N$, $(1-1/q)(1-1/q)^{-2}=q/(q-1)$. The product
+of these factors over odd $q$ converges to $\Sg(N)/2$, and $\prod_{2<q<z}(1-1/q)\sim 2e^{-\gamma}/\log z$.
+\end{proof}
+
+We use the following sieve tools; see \cite{Chen1} for statements and references.
+The linear sieve ($\kappa=1$, $\beta=2$) has functions $F_1$, $f_1$ with $F_1(s)=2e^\gamma/s$ for $0<s\le3$ and
+$f_1(s)=2e^{\gamma}\log(s-1)/s$ for $2\le s\le 4$, $f_1(s)=0$ for $s\le2$
+\cite{IwaniecRosser}; the semi-linear sieve ($\kappa=1/2$, $\beta=1$) has functions $F_{1/2}$,
+$f_{1/2}$ \cite{IwaniecHalf}. The vector sieve inequality \cite{BF} is
+$ab\ge a^-b^++a^+b^--a^+b^+$ for $a,b\in\{0,1\}$, $a^-\le a\le a^+$, $b^-\le b\le b^+$, $a^+,b^+\ge0$.
+The Bombieri--Vinogradov theorem for convolutions is used as in \cite[Lemma~2.4]{Chen1}.
+
+%=====================================================================================================
+\section{The weighted sieve and switching}\label{sec:switch}
+
+Fix $0<\alpha<\delta<1/4$, $0<\lambda$, $\alpha<\beta_1\le1/2$, and put
+\[
+y=N^{1/2-\delta},\quad z=N^{\alpha},\quad y_1=N^{\beta_1},\quad
+P_I=\prod_{\substack{q\in\cP_3\\ q<y}}q,\quad P_S=\prod_{\substack{q\in\cP_1\\ q<z}}q,\quad P=P_IP_S .
+\]
+Every odd prime $q<z$ divides $P$. For $a_n\in\cA$ with $(a_n,P)=1$ define
+\[
+w_n=1-\lambda\sum_{\substack{q\mid a_n,\ q\in\cP_1\\ z\le q<y_1}}\Bigl(1-\frac{\log q}{\log y_1}\Bigr),
+\qquad W=\sum_{(a_n,P)=1}w_n .
+\]
+
+\begin{lemma}[Structure]\label{lem:structure}
+Let $(a_n,P)=1$. Then either
+\begin{enumerate}
+\item[(i)] $n$ and $N-n$ are both sums of two squares, all their prime factors are $\ge z$, and those
+in $\cP_3$ occur only as squares $q^2$; or
+\item[(ii)] for $m'=n$ or $m'=N-n$ we have $m'=q_1q_2m$ with $q_1<q_2$, $q_1,q_2\in\cP_3$, $q_1\ge y$, and
+$m\le N^{2\delta}$ composed of primes of $\cP_1$ that are $\ge z$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Each of $n$, $N-n$ is odd and $\equiv1\pmod4$, so each has an even number of prime factors in $\cP_3$,
+counted with multiplicity. They are all $\ge y$, and $y^4>N$, so each side has $0$ or $2$ of them. If on both
+sides there are none, or they coincide, both sides are sums of two squares. Otherwise some side is as in
+(ii). In particular, two exceptional prime factors never lie on different sides.
+\end{proof}
+
+\begin{lemma}[Prime factors]\label{lem:omega}
+If $a_n$ is as in Lemma~\ref{lem:structure}(i), squarefree, and $w_n>0$, then
+$\Omega(n(N-n))<1/\lambda+2/\beta_1$.
+\end{lemma}
+
+\begin{proof}
+All prime factors of $a_n$ are in $\cP_1$ and $\ge z$, and $\log a_n\le 2\log N$. As in
+\cite[Lemma~3.2]{Chen1},
+$\sum_{q\mid a_n,\,q<y_1}(1-\log q/\log y_1)\ge\Omega(a_n)-\log a_n/\log y_1\ge\Omega(a_n)-2/\beta_1$.
+\end{proof}
+
+Non-squarefree $a_n$ with a square factor $q^2$, $q\ge z$, number $\ll N^{1-\alpha}$ and are negligible.
+
+\begin{proposition}[Main term]\label{prop:W}
+Let $\theta_I\in(0,1)$ and, for $u\in[\alpha,\beta_1]$, $t(u)\in(0,1-u)$. Put $s_I=\theta_I/(1/2-\delta)$,
+$s_S=(1-\theta_I)/\alpha$,
+\[
+L=f_1(s_I)F_1(s_S)+F_1(s_I)f_1(s_S)-F_1(s_I)F_1(s_S),
+\]
+\[
+R=\int_\alpha^{\beta_1}\Bigl(1-\frac u{\beta_1}\Bigr)F_1\Bigl(\frac{t(u)}{1/2-\delta}\Bigr)
+F_1\Bigl(\frac{1-u-t(u)}{\alpha}\Bigr)\frac{du}{u}.
+\]
+Then $W\ge(L-\lambda R+o(1))\,XV$, where $V=\prod_{q\mid P}(1-g(q))$ and
+\[
+XV\sim\frac{e^{-2\gamma}}{2\alpha(1/2-\delta)}\;\Sg(N)\frac{N}{(\log N)^2}.
+\]
+\end{proposition}
+
+\begin{proof}
+Apply the vector sieve with $a=1_{(a_n,P_I)=1}$ and $b=1_{(a_n,P_S)=1}$. Both are linear sieves:
+$P_I$ and $P_S$ consist of primes from one half of the residue classes modulo $4$, each with
+$\rho(q)=2$ (apart from the finitely many $q\mid N$ below a given bound, which do not affect the dimension).
+Use levels $N^{\theta_I}$ and $N^{1-\theta_I-\varepsilon}$; the combined moduli are $\le N^{1-\varepsilon}$
+and Lemma~\ref{lem:level} controls the remainders. For the weights, $q\mid a_n$ for $q\in\cP_1$, $q\nmid N$,
+has density $g(q)=2/q$, and $\sum_{q\in\cP_1}2/q$ over $N^u\le q<N^{u+du}$ is $du/u$. The upper bound vector
+sieve for $\cA_q$ at levels $N^{t(u)}$, $N^{1-u-t(u)-\varepsilon}$ gives $R$. Finally
+$V=\prod_{2<q<z}(1-g(q))\prod_{q\in\cP_3,\,z\le q<y}(1-g(q))$, and Lemma~\ref{lem:local} together with
+$\prod_{q\in\cP_3,\,z\le q<y}(1-2/q)\sim\log z/\log y$ gives the asymptotic for $XV$.
+\end{proof}
+
+\begin{proposition}[Switching]\label{prop:switch}
+Let $\cE$ be the set of $n$ with $(a_n,P)=1$ in case (ii) of Lemma~\ref{lem:structure}. Then
+\[
+\#\cE\le\Bigl(4\,c(\delta,\alpha)\,e^{\gamma}\sqrt{\alpha(1/2-\delta)}\;U+o(1)\Bigr)\,XV,
+\]
+where $c(\delta,\alpha)$ is the switching density of \cite[Prop.~4.1]{Chen1} and
+\[
+U=\min_{0<t<1/2}F_{1/2}\Bigl(\frac{t}{1/2-\delta}\Bigr)F_{1/2}\Bigl(\frac{1/2-t}{\alpha}\Bigr).
+\]
+\end{proposition}
+
+\begin{proof}
+Write $\cE=\cE_1\cup\cE_2$ according as the exceptional pair lies in $n$ or in $N-n$; the two cases are
+symmetric, which accounts for a factor $2$. Consider $\cE_1$. Let $\cT$ be the set of triples
+$(q_1,q_2,m)$ as in Lemma~\ref{lem:structure}(ii) with $t=q_1q_2m\le N$, so that
+$|\cT|=(c(\delta,\alpha)+o(1))N/\log N$ as in \cite{Chen1}; note $t\equiv1\pmod4$ automatically.
+Every $n\in\cE_1$ equals such a $t$, and $N-t$ has no prime factor in $P$. Hence $\#\cE_1$ is at most the
+number of elements of $\cB=\{N-t:\ t\in\cT\}$ coprime to $P$.
+
+Let $\ell\mid P$. No prime factor of $t$ divides $P$ (the $q_i$ are $\ge y$ and the prime factors of $m$
+are split and $\ge z$), so $t$ is equidistributed in the nonzero classes modulo $\ell$. Hence, for
+$\ell\nmid N$, $\ell\mid N-t$ with density $g_\cB(\ell)=1/(\ell-1)$, while for $\ell\mid N$ we have
+$\ell\nmid N-t$, so $g_\cB(\ell)=0$. The upper bound vector sieve for $\cB$ with the semi-linear components
+$P_I$ and $P_S$ at total level $N^{1/2}(\log N)^{-B}$ (Bombieri--Vinogradov for the convolution
+$q_1*(q_2m)$) gives
+\[
+\#\cE_1\le\bigl(U+o(1)\bigr)\,|\cB|\prod_{q\mid P}(1-g_\cB(q)).
+\]
+Now $(1-1/(\ell-1))(1-1/\ell)^{-1}=1-(\ell-1)^{-2}$ and $(1-0)(1-1/\ell)^{-1}=\ell/(\ell-1)$ for $\ell\mid N$:
+these are the same local factors as in Lemma~\ref{lem:local}. Hence
+\[
+\prod_{q\mid P}(1-g_\cB(q))\sim\frac{\Sg(N)}{2}\cdot\frac{2e^{-\gamma}}{\log z}\Bigl(\frac{\log z}{\log y}\Bigr)^{1/2},
+\]
+and therefore
+\[
+\#\cE_1\le\bigl(U+o(1)\bigr)\,c\,\frac{N}{\log N}\cdot\frac{\Sg(N)e^{-\gamma}}{\alpha\log N}
+\Bigl(\frac{\alpha}{1/2-\delta}\Bigr)^{1/2}
+=\bigl(2c\,e^{\gamma}\sqrt{\alpha(1/2-\delta)}\,U+o(1)\bigr)XV,
+\]
+using Proposition~\ref{prop:W} for $XV$. The singular series cancels exactly. Adding $\cE_2$ gives the claim.
+\end{proof}
+
+%=====================================================================================================
+\section{Numerical verification and proof of Theorem~\ref{thm:main}}\label{sec:numerics}
+
+By Lemma~\ref{lem:structure} and $w_n\le1$, the weighted count over case (i) is at least
+$W-\#\cE\ge(\mathrm{net}+o(1))XV$ with
+\[
+\mathrm{net}=L-\lambda R-4c(\delta,\alpha)e^{\gamma}\sqrt{\alpha(1/2-\delta)}\,U .
+\]
+We take $\delta=0.22$, $\alpha=0.01$, $\lambda=1/8$, $\beta_1=2/5$, so that $1/\lambda+2/\beta_1=13$ and,
+by Lemma~\ref{lem:omega}, $\Omega(n(N-n))\le12$ for the counted $n$.
+
+\begin{lemma}\label{lem:numerics}
+For these parameters (with $\theta_I=0.9495$), $L\ge0.913373$, $R\le3.144708$, $c(\delta,\alpha)\le1.092388$,
+$U\le1.166741$ and $\mathrm{net}\ge0.039808$.
+\end{lemma}
+
+\begin{proof}[Method of verification]
+The script \texttt{code/certify.py} uses outward-rounded interval arithmetic as in \cite[Section~5]{Chen1},
+now also for the linear sieve functions, whose delay-differential equations are integrated on the grid
+$10^{-3}\mathbb Z$ up to $s=110$ with monotone enclosures.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+By Lemma~\ref{lem:numerics} and Proposition~\ref{prop:W}, the number of counted $n$ is at least
+$(0.0398+o(1))\frac{e^{-2\gamma}}{2\cdot0.01\cdot0.28}\Sg(N)\frac{N}{(\log N)^2}
+\ge 2\,\Sg(N)\frac{N}{(\log N)^2}$ for large $N$ (the numerical constant is $\ge2.24$).
+\end{proof}
 
 \begin{thebibliography}{9}
+\bibitem{BF} J.~Br\"udern, \'E.~Fouvry, \emph{Lagrange's four squares theorem with almost prime variables},
+J. reine angew. Math. \textbf{454} (1994), 59--96.
 \bibitem{Chen1} R.~Chen, \emph{On primes $p$ for which $N-p$ is an almost prime sum of two squares, and other
 class number one forms}, preprint, doi:10.5281/zenodo.23136112.
+\bibitem{Hooley} C.~Hooley, \emph{On the intervals between numbers that are sums of two squares}
+\verify{exact reference}.
+\bibitem{Indlekofer} K.-H.~Indlekofer, \emph{Scharfe untere Absch\"atzung f\"ur die Anzahlfunktion der
+B-Zwillinge}, Acta Arith. \textbf{26} (1974/75), 207--212 \verify{check}.
+\bibitem{IwaniecHalf} H.~Iwaniec, \emph{The half dimensional sieve}, Acta Arith. \textbf{29} (1976), 69--95.
+\bibitem{IwaniecRosser} H.~Iwaniec, \emph{Rosser's sieve}, Acta Arith. \textbf{36} (1980), 171--202.
 \end{thebibliography}
 
 \end{document}
