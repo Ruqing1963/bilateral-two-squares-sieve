@@ -93,68 +93,90 @@ print(f"linear:      F(3) in [{lin['Flo'][3000]:.6f},{lin['Fhi'][3000]:.6f}], f(
       f"{lin['fhi'][4000]:.6f}], F(110) <= {lin['Fhi'][-1]:.6f}, f(110) >= {lin['flo'][-1]:.6f}")
 print(f"semi-linear: F(2.5) in [{half['Flo'][2500]:.6f},{half['Fhi'][2500]:.6f}], f(60) >= {half['flo'][-1]:.6f}")
 
-delta, alpha, lam, beta1 = 0.22, 0.010, 0.125, 0.40
-ey = 0.5 - delta                                        # log y / log N
 
-# ---- L (lower) ----------------------------------------------------------------------------------------
-best = None
-for tI in np.arange(0.60, 0.99, 0.0005):
-    sI, sS = tI / ey, (1 - tI) / alpha
-    v = f_dn(lin, sI) * F_dn(lin, sS) + F_up(lin, sI) * (f_dn(lin, sS) - F_up(lin, sS))
-    if best is None or v > best[0]:
-        best = (v, tI)
-tI = best[1]; sI, sS = tI / ey, (1 - tI) / alpha
-L_lo = dn(dn(f_dn(lin, sI) * F_dn(lin, sS)) + dn(F_up(lin, sI) * dn(f_dn(lin, sS) - F_up(lin, sS))))
 
-# ---- R (upper) ----------------------------------------------------------------------------------------
-NU = 4000
-R_hi = 0.0
-for kk in range(NU):
-    ua, ub = dn(alpha + (beta1 - alpha) * kk / NU), up(alpha + (beta1 - alpha) * (kk + 1) / NU)
-    lev = 1 - ub
-    bestU = min(F_up(lin, t / ey) * F_up(lin, dn((1 - ub - t) / alpha))
-                for t in np.linspace(lev * 0.5, lev * 0.995, 80))
-    weight = up(up(1 - ua / beta1) / ua)
-    R_hi = up(R_hi + up(up(weight * bestU) * up(ub - ua)))
+def certify(delta_s, alpha_s, lam, beta1, label):
+    """delta_s, alpha_s: exact decimal strings; lam, beta1: exactly representable binary fractions or decimals
+    (only used through 1/lam + 2/beta1, checked in exact rational arithmetic, and as float factors)."""
+    from fractions import Fraction
+    delta, alpha = float(delta_s), float(alpha_s)
+    ey = 0.5 - delta                                       # log y / log N
+    ey_s = str(Fraction(1, 2) - Fraction(delta_s))
+    ey_iv = iv.mpf(Fraction(ey_s).numerator) / Fraction(ey_s).denominator
+    al_iv = iv.mpf(Fraction(alpha_s).numerator) / Fraction(alpha_s).denominator
+    bound = 1 / Fraction(str(lam)) + 2 / Fraction(str(beta1))
+    k = int(-(-bound // 1)) - 1                            # Omega < bound  =>  Omega <= ceil(bound) - 1
+    print(f"\n=== {label}: delta={delta_s}, alpha={alpha_s}, lam={lam}, beta1={beta1};"
+          f" 1/lam + 2/beta1 = {bound} => Omega(n1 n2) <= {k} ===")
 
-# ---- c (upper), same method as in the companion paper ---------------------------------------------------
-# I(mu) = log((1/2+delta-mu)/(1/2-delta))/(1-mu) is decreasing on [0, 2 delta] when
-# log((1/2+delta)/(1/2-delta)) < 1 (derivative has the sign of I(mu)(1-mu) - (1-mu)/(1/2+delta-mu) < 0).
-assert float(iv.log(iv.mpf('0.72') / iv.mpf('0.28')).b) < 1
-i_al, i_top = 20, 880                                    # alpha = 20/2000, 2 delta = 880/2000
-mass = np.zeros(i_top + 1)
-for k in range(i_al, i_top):
-    mass[k] = up(float((iv.mpf('0.5') * iv.log(iv.mpf([k + 1, k + 1]) / k)).b))
-total = np.zeros(i_top + 1); total[0] = 1.0; term = total.copy()
-for j in range(1, i_top // i_al + 1):
-    term = np.convolve(term, mass)[: i_top + 1] / j
-    total += term
-total *= (1 + 1e-9)
-c_hi = 0.0
-for k in range(i_top + 1):
-    if total[k] == 0:
-        continue
-    mu = iv.mpf([k, k]) / 2000
-    lo_, hi_ = iv.mpf('0.28'), (1 - mu) / 2
-    if hi_.a <= lo_.b:
-        continue
-    a = 1 - mu
-    I = (iv.log(hi_ / lo_) - iv.log((a - hi_) / (a - lo_))) / a
-    c_hi = up(c_hi + up(total[k] * up(0.25 * float(I.b))))
+    # ---- L (lower) ----
+    best = None
+    for tI in np.arange(0.60, 0.995, 0.0005):
+        sI, sS = tI / ey, (1 - tI) / alpha
+        v = f_dn(lin, sI) * F_dn(lin, sS) + F_up(lin, sI) * (f_dn(lin, sS) - F_up(lin, sS))
+        if best is None or v > best[0]:
+            best = (v, tI)
+    tI = best[1]; sI, sS = tI / ey, (1 - tI) / alpha
+    L_lo = dn(dn(f_dn(lin, sI) * F_dn(lin, sS)) + dn(F_up(lin, sI) * dn(f_dn(lin, sS) - F_up(lin, sS))))
 
-# ---- bad (upper) --------------------------------------------------------------------------------------
-Us = min(F_up(half, t / ey) * F_up(half, dn((0.5 - t) / alpha)) for t in np.linspace(0.30, 0.495, 400))
-pref = 4 * EG_iv * iv.sqrt(iv.mpf('0.010') * iv.mpf('0.28'))
-bad_hi = up(up(float(pref.b) * c_hi) * Us)
+    # ---- R (upper) ----
+    NU = 4000
+    R_hi = 0.0
+    for kk in range(NU):
+        ua, ub = dn(alpha + (beta1 - alpha) * kk / NU), up(alpha + (beta1 - alpha) * (kk + 1) / NU)
+        lev = 1 - ub
+        bestU = min(F_up(lin, t / ey) * F_up(lin, dn((1 - ub - t) / alpha))
+                    for t in np.linspace(lev * 0.5, lev * 0.995, 80))
+        weight = up(up(1 - ua / beta1) / ua)
+        R_hi = up(R_hi + up(up(weight * bestU) * up(ub - ua)))
 
-net_lo = dn(dn(L_lo - up(lam * R_hi)) - bad_hi)
-scale = iv.exp(-2 * iv.euler) / (2 * iv.mpf('0.010') * iv.mpf('0.28'))   # main-term normalisation
-print(f"theta_I = {tI:.4f} (s_I = {sI:.4f}, s_S = {sS:.2f})")
-print(f"L   >= {L_lo:.6f}")
-print(f"R   <= {R_hi:.6f}")
-print(f"c   <= {c_hi:.6f}")
-print(f"U_side <= {Us:.6f}")
-print(f"bad <= {bad_hi:.6f}")
-print(f"certified:  net >= {net_lo:+.6f}   ->  {'POSITIVE' if net_lo > 0 else 'NOT certified'}")
-if net_lo > 0:
-    print(f"lower bound constant: #reps >= {dn(net_lo * float(scale.a)):.5f} * S(N) N/(log N)^2 * (1+o(1))")
+    # ---- c (upper) ----
+    # I(mu) = log((a-mu)/b)/(1-mu), a = 1/2+delta, b = 1/2-delta. Its derivative has the sign of
+    # log((a-mu)/b) - (1-mu)/(a-mu); the first term decreases and the second increases in mu (a < 1),
+    # so I is decreasing on [0, 2 delta] as soon as log(a/b) < 1/a.
+    a_iv = 1 - ey_iv
+    assert float(iv.log(a_iv / ey_iv).b) < float((1 / a_iv).a), "monotonicity of I(mu) not established"
+    i_al = int(round(alpha * 2000)); i_top = int(round(2 * delta * 2000))
+    assert abs(i_al - alpha * 2000) < 1e-9 and abs(i_top - 2 * delta * 2000) < 1e-9
+    mass = np.zeros(i_top + 1)
+    for kq in range(i_al, i_top):
+        mass[kq] = up(float((iv.mpf('0.5') * iv.log(iv.mpf([kq + 1, kq + 1]) / kq)).b))
+    total = np.zeros(i_top + 1); total[0] = 1.0; term = total.copy()
+    for j in range(1, i_top // i_al + 1):
+        term = np.convolve(term, mass)[: i_top + 1] / j
+        total += term
+    total *= (1 + 1e-9)
+    c_hi = 0.0
+    for kq in range(i_top + 1):
+        if total[kq] == 0:
+            continue
+        mu = iv.mpf([kq, kq]) / 2000
+        hi_ = (1 - mu) / 2
+        if hi_.a <= ey_iv.b:
+            continue
+        aa = 1 - mu
+        I = (iv.log(hi_ / ey_iv) - iv.log((aa - hi_) / (aa - ey_iv))) / aa
+        c_hi = up(c_hi + up(total[kq] * up(0.25 * float(I.b))))
+
+    # ---- bad (upper) ----
+    Us = min(F_up(half, t / ey) * F_up(half, dn((0.5 - t) / alpha)) for t in np.linspace(0.15, 0.495, 700))
+    pref = 4 * EG_iv * iv.sqrt(al_iv * ey_iv)
+    bad_hi = up(up(float(pref.b) * c_hi) * Us)
+
+    net_lo = dn(dn(L_lo - up(lam * R_hi)) - bad_hi)
+    scale = iv.exp(-2 * iv.euler) / (2 * al_iv * ey_iv)
+    print(f"theta_I = {tI:.4f} (s_I = {sI:.4f}, s_S = {sS:.2f})")
+    print(f"L   >= {L_lo:.6f}")
+    print(f"R   <= {R_hi:.6f}")
+    print(f"c   <= {c_hi:.6f}")
+    print(f"U_side <= {Us:.6f}")
+    print(f"bad <= {bad_hi:.6f}")
+    print(f"certified:  net >= {net_lo:+.6f}   ->  {'POSITIVE' if net_lo > 0 else 'NOT certified'}")
+    if net_lo > 0:
+        print(f"lower bound constant: #reps >= {dn(net_lo * float(scale.a)):.5f} * S(N) N/(log N)^2 * (1+o(1))")
+    return net_lo
+
+
+if __name__ == "__main__":
+    certify("0.22", "0.010", 0.125, 0.40, "k = 12")
+    certify("0.245", "0.016", 0.125, 0.50, "k = 11")

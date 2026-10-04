@@ -26,9 +26,9 @@ with few prime factors}
 \begin{document}
 
 \begin{abstract}
-DRAFT. Let $N\equiv 2\pmod 4$ be sufficiently large. We show that the number of $n\le N$ such that $n$
-and $N-n$ are both sums of two squares and $\Omega(n(N-n))\le 12$ is at least
-$2\,\Sg(N)N/(\log N)^2$, where $\Sg(N)$ is the binary Goldbach singular series. The level of distribution
+Let $N\equiv 2\pmod 4$ be sufficiently large. We show that the number of $n\le N$ such that $n$
+and $N-n$ are both sums of two squares and $\Omega(n(N-n))\le 11$ is at least
+$\frac32\,\Sg(N)N/(\log N)^2$, where $\Sg(N)$ is the binary Goldbach singular series. The level of distribution
 of the sequence $n(N-n)$ is $1$, but sifting the primes $q\equiv 3\pmod 4$ up to $N^{1/2}$ with the linear
 sieve falls exactly on the sieving limit $s=2$. We therefore sift these primes only up to $N^{1/2-\delta}$
 and remove the survivors with two large prime factors $\equiv 3\pmod 4$ on the same side by a switching
@@ -43,15 +43,23 @@ arithmetic.
 
 Every positive integer is a sum of four squares, so every $N$ is of the form $n_1+n_2$ with $n_1,n_2$
 sums of two squares. We ask for such representations in which $n_1$ and $n_2$ have few prime factors.
-This is a two-sided analogue of the problem treated in \cite{Chen1}, where one summand is a prime and
-the other an almost prime sum of two squares, and of the classical problem of pairs $n$, $n+h$ of sums of
-two squares \cite{Hooley,Indlekofer}.
+
+The multiplicative analogue, pairs $n$, $n+1$ that are both sums of two squares, was settled up to
+constants by Hooley \cite{Hooley} and Indlekofer \cite{Indlekofer}, who showed that there are
+$\asymp x/\log x$ such $n\le x$; correlations $\sum r(n)r(n+h)$ of the representation function have since
+been studied by spectral methods, with uniformity in the coefficients of the forms, e.g.\ by
+Blomer \cite{Blomer}. On the side of almost prime variables, Br\"udern and Fouvry \cite{BF} proved
+Lagrange's four squares theorem with almost prime variables, and Blomer, Grimmelt, Li and Rydin Myerson
+\cite{BGLR} showed that every large $n\equiv1,3\pmod 6$ is a prime plus two squares of almost primes. In
+these works the almost prime condition is on the variables $x_i$. Here it is on the values $x^2+y^2$
+themselves. Finally, \cite{Chen1} treats the case where one summand is a prime and the other is an almost
+prime sum of two squares; the present problem is its two-sided analogue.
 
 \begin{theorem}\label{thm:main}
 For every sufficiently large $N\equiv 2\pmod 4$,
 \begin{multline*}
-\#\{n\le N:\ n\equiv 1\ (\mathrm{mod}\ 4),\ n=x^2+y^2,\ N-n=z^2+w^2,\ \Omega(n(N-n))\le 12\}\\
-\ge\ 2\,\Sg(N)\,\frac{N}{(\log N)^2},
+\#\{n\le N:\ n\equiv 1\ (\mathrm{mod}\ 4),\ n=x^2+y^2,\ N-n=z^2+w^2,\ \Omega(n(N-n))\le 11\}\\
+\ge\ \frac32\,\Sg(N)\,\frac{N}{(\log N)^2},
 \end{multline*}
 where $\Sg(N)=2\prod_{\ell>2}\bigl(1-(\ell-1)^{-2}\bigr)\prod_{\ell\mid N,\,\ell>2}\frac{\ell-1}{\ell-2}$.
 \end{theorem}
@@ -64,8 +72,8 @@ odd parts only; we do not pursue this here.
 \end{remark}
 
 \begin{remark}
-Floating point computations (not certified) indicate that the same method gives $\Omega(n(N-n))\le 11$
-when $\delta$ is taken close to $1/4$.
+With the parameters of the second line of Table~\ref{tab:cert} the same method gives the weaker bound
+$\Omega(n(N-n))\le 12$ with the larger constant $2.24$ in place of $\frac32$; both are certified.
 \end{remark}
 
 \subsection*{Method}
@@ -80,7 +88,7 @@ are counted from above by switching (Section~\ref{sec:switch}). Prime factors ar
 weights applied to $n(N-n)$ jointly.
 
 \begin{remark}
-The literature has not yet been checked systematically for this statement.
+To the best of the author's knowledge, Theorem~\ref{thm:main} has not appeared in the literature.
 \end{remark}
 
 %=====================================================================================================
@@ -251,35 +259,80 @@ $W-\#\cE\ge(\mathrm{net}+o(1))XV$ with
 \[
 \mathrm{net}=L-\lambda R-4c(\delta,\alpha)e^{\gamma}\sqrt{\alpha(1/2-\delta)}\,U .
 \]
-We take $\delta=0.22$, $\alpha=0.01$, $\lambda=1/8$, $\beta_1=2/5$, so that $1/\lambda+2/\beta_1=13$ and,
-by Lemma~\ref{lem:omega}, $\Omega(n(N-n))\le12$ for the counted $n$.
+By Lemma~\ref{lem:omega}, every squarefree counted $n$ with $w_n>0$ satisfies
+$\Omega(n(N-n))<1/\lambda+2/\beta_1$. We use the two parameter sets of Table~\ref{tab:cert}; in both,
+$1/\lambda+2/\beta_1$ is an integer, computed in exact rational arithmetic.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{cccccccccc}
+\hline
+$\delta$ & $\alpha$ & $\lambda$ & $\beta_1$ & $k$ & $L\ge$ & $R\le$ & $c\le$ & $U\le$ & $\mathrm{net}\ge$\\
+\hline
+$0.245$ & $0.016$ & $1/8$ & $1/2$ & $11$ & $0.944016$ & $2.830154$ & $1.067736$ & $1.134620$ & $0.038949$\\
+$0.22$ & $0.010$ & $1/8$ & $2/5$ & $12$ & $0.913373$ & $3.144708$ & $1.092388$ & $1.166735$ & $0.039811$\\
+\hline
+\end{tabular}
+\medskip
+\caption{Certified bounds. Here $k=\lceil 1/\lambda+2/\beta_1\rceil-1$; the linear sieve level split is
+$\theta_I=0.9220$ resp.\ $0.9495$.}
+\label{tab:cert}
+\end{table}
 
 \begin{lemma}\label{lem:numerics}
-For these parameters (with $\theta_I=0.9495$), $L\ge0.913373$, $R\le3.144708$, $c(\delta,\alpha)\le1.092388$,
-$U\le1.166741$ and $\mathrm{net}\ge0.039808$.
+The bounds of Table~\ref{tab:cert} hold.
 \end{lemma}
 
 \begin{proof}[Method of verification]
-The script \texttt{code/certify.py} uses outward-rounded interval arithmetic as in \cite[Section~5]{Chen1},
-now also for the linear sieve functions, whose delay-differential equations are integrated on the grid
-$10^{-3}\mathbb Z$ up to $s=110$ with monotone enclosures.
+The computation is carried out by the script \texttt{code/certify.py}.
+\begin{enumerate}
+\item The sieve functions $F_1,f_1$ ($\kappa=1$) and $F_{1/2},f_{1/2}$ ($\kappa=1/2$) are evaluated from their
+closed forms on $(0,3]$, $[2,4]$ resp.\ $(0,2]$, $[1,3]$ in interval arithmetic (\texttt{mpmath.iv}, 80 bits).
+Beyond these ranges the delay-differential equations $(s^\kappa F(s))'=\kappa s^{\kappa-1}f(s-1)$,
+$(s^\kappa f(s))'=\kappa s^{\kappa-1}F(s-1)$ are integrated on the grid $10^{-3}\mathbb Z$ (up to $s=110$
+resp.\ $60$): on each step the lagged function is enclosed between its values at the end points, using
+that $F$ decreases and $f$ increases, and $\int\kappa s^{\kappa-1}ds$ is computed exactly. Each floating
+point operation is followed by one outward rounding step. Off the grid, monotonicity gives one-sided bounds.
+\item $L$ is bounded below via $L=f_1(s_I)F_1(s_S)+F_1(s_I)\bigl(f_1(s_S)-F_1(s_S)\bigr)$ and
+$f_1(s_S)-F_1(s_S)\le0$.
+\item $R$ is bounded above by a Riemann sum over $4000$ cells with $t(u)$ constant on each cell; on a cell
+$[u_a,u_b]$ the factor $(1-u/\beta_1)/u$ is largest at $u_a$ and $F_1((1-u-t)/\alpha)$ is largest at $u_b$.
+$U$ is bounded above by evaluating the product at one admissible $t$.
+\item For $c$, the measure $\frac12\,1_{[\alpha,2\delta]}(\mu)\,d\mu/\mu$ is replaced by the masses
+$\frac12\log\frac{k+1}{k}$ placed at the left end points $k/2000$. The integrand
+$I(\mu)=\frac{1}{1-\mu}\log\frac{1/2+\delta-\mu}{1/2-\delta}$ is decreasing on $[0,2\delta]$: its derivative
+has the sign of $\log\frac{a-\mu}{b}-\frac{1-\mu}{a-\mu}$ with $a=\frac12+\delta<1$, $b=\frac12-\delta$, whose
+first term decreases and second increases, and which is negative at $\mu=0$ (checked in the script).
+So moving mass to the left gives an upper bound. The floating point convolution is multiplied by $1+10^{-9}$.
+\end{enumerate}
+A finer independent computation of $c(0.22,0.01)$ (grid $1/20000$) gives $1.0913$, consistent with the
+certified upper bound.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:main}]
-By Lemma~\ref{lem:numerics} and Proposition~\ref{prop:W}, the number of counted $n$ is at least
-$(0.0398+o(1))\frac{e^{-2\gamma}}{2\cdot0.01\cdot0.28}\Sg(N)\frac{N}{(\log N)^2}
-\ge 2\,\Sg(N)\frac{N}{(\log N)^2}$ for large $N$ (the numerical constant is $\ge2.24$).
+Take the first line of Table~\ref{tab:cert}. By Lemma~\ref{lem:numerics} and Proposition~\ref{prop:W},
+after removing the $\ll N^{1-\alpha}$ non-squarefree $a_n$, the number of counted $n$ is at least
+\[
+\bigl(0.038949+o(1)\bigr)\frac{e^{-2\gamma}}{2\cdot0.016\cdot0.255}\,\Sg(N)\frac{N}{(\log N)^2}
+\ \ge\ \frac32\,\Sg(N)\frac{N}{(\log N)^2}
+\]
+for large $N$ (the numerical constant is $\ge1.5046$). Each of them has $n$ and $N-n$ sums of two squares
+and $\Omega(n(N-n))\le 11$.
 \end{proof}
 
 \begin{thebibliography}{9}
+\bibitem{Blomer} V.~Blomer, \emph{Uniform bounds for Fourier coefficients of theta-series with arithmetic
+applications}, Acta Arith. \textbf{114} (2004), 1--21.
+\bibitem{BGLR} V.~Blomer, L.~Grimmelt, J.~Li, S.~L.~Rydin Myerson, \emph{Additive problems with almost prime
+squares}, Geom. Funct. Anal. \textbf{33} (2023); arXiv:2111.01601.
 \bibitem{BF} J.~Br\"udern, \'E.~Fouvry, \emph{Lagrange's four squares theorem with almost prime variables},
 J. reine angew. Math. \textbf{454} (1994), 59--96.
 \bibitem{Chen1} R.~Chen, \emph{On primes $p$ for which $N-p$ is an almost prime sum of two squares, and other
 class number one forms}, preprint, doi:10.5281/zenodo.23136112.
-\bibitem{Hooley} C.~Hooley, \emph{On the intervals between numbers that are sums of two squares}
-\verify{exact reference}.
+\bibitem{Hooley} C.~Hooley, \emph{On the intervals between numbers that are sums of two squares.\ III},
+J. reine angew. Math. \textbf{267} (1974), 207--218.
 \bibitem{Indlekofer} K.-H.~Indlekofer, \emph{Scharfe untere Absch\"atzung f\"ur die Anzahlfunktion der
-B-Zwillinge}, Acta Arith. \textbf{26} (1974/75), 207--212 \verify{check}.
+B-Zwillinge}, Acta Arith. \textbf{26} (1974), 207--212.
 \bibitem{IwaniecHalf} H.~Iwaniec, \emph{The half dimensional sieve}, Acta Arith. \textbf{29} (1976), 69--95.
 \bibitem{IwaniecRosser} H.~Iwaniec, \emph{Rosser's sieve}, Acta Arith. \textbf{36} (1980), 171--202.
 \end{thebibliography}
