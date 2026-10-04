@@ -79,6 +79,7 @@ code/plot_figures.py   regenerates Figures 1-2 (illustrative, floating point)
 code/certify.py        interval-arithmetic certification of the three parameter sets (~20 s)
 code/local_conditions.py  local conditions for the nine discriminants (Table 3 of the paper)
 code/scan_beta1.py     joint and per-side Omega bounds, Richert range beta1 up to 0.95 (no gain)
+code/estimate_modular_tradeoff.py  exploratory: weights r(n)r(N-n) at an assumed level theta (not part of the paper)
 code/sieve_core.py     floating-point sieve functions and switching density
 code/scan.py           schemes S1-S3 and parameter scan (~40 s)
 results/               outputs of certify.py and scan.py

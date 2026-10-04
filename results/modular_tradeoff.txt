@@ -1,0 +1,11 @@
+﻿paper's route (level 1, inert sieve + switching):  no weights 27,  Richert: joint 11, max side 8
+modular route, level theta of r(n)r(N-n):
+ theta | no weights | Richert joint | Richert max side
+ 0.333 |         33 |            10 |                6
+ 0.400 |         26 |             9 |                6
+ 0.450 |         24 |             8 |                5
+ 0.500 |         22 |             8 |                5
+ 0.550 |         19 |             7 |                5
+ 0.600 |         18 |             7 |                5
+ 0.750 |         14 |             6 |                4
+ 1.000 |         10 |             5 |                3
