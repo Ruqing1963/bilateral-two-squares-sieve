@@ -1,0 +1,48 @@
+\documentclass[11pt]{amsart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\title[Sums of two almost prime sums of two squares]{Even integers as sums of two sums of two squares
+with few prime factors}
+\author{Ruqing Chen}
+\address{GUT Geoservice Inc., Montreal, Canada}
+\email{ruqing@hotmail.com}
+
+\begin{document}
+
+\begin{abstract}
+DRAFT SKELETON. No result is claimed yet; see \texttt{code/scan.py} and \texttt{results/}.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+% Problem: N = n_1 + n_2 with n_1, n_2 sums of two squares and Omega(n_1 n_2) <= k, N = 2 (mod 4).
+% Remark on the prime 2: for N = 2^j the only representation is n_1 = n_2 = 2^{j-1}.
+% Literature: Hooley / Indlekofer (n, n+h both sums of two squares), Brudern--Fouvry, Chen.
+
+\section{The sequence $n(N-n)$ and its level of distribution}
+% |r_d| <= rho(d); level N^{1-eps}, shared by all sieve components (CRT).
+
+\section{The vector sieve and the $s=2$ threshold}
+% Linear sieve on inert primes of n(N-n): sifting to sqrt N at level N gives s = 2, f_1(2) = 0.
+
+\section{Switching}
+% Survivors with two inert factors >= N^{1/2-delta}; upper bound sieve on {N - q_1 q_2 m} at level 1/2.
+
+\section{Numerical verification}
+% To be written after the scheme is fixed (interval arithmetic as in the companion paper).
+
+\begin{thebibliography}{9}
+\bibitem{Chen1} R.~Chen, \emph{On primes $p$ for which $N-p$ is an almost prime sum of two squares, and other
+class number one forms}, preprint, doi:10.5281/zenodo.23136112.
+\end{thebibliography}
+
+\end{document}

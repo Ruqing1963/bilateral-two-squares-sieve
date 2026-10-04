@@ -1,0 +1,6 @@
+﻿S1 no weights: smallest Omega(n1 n2) bound k =  35  (delta=0.24, alpha=0.056, lam=0.000, beta1=None, kept=+0.1569)
+S1 Richert   : smallest Omega(n1 n2) bound k =  11  (delta=0.24, alpha=0.016, lam=0.139, beta1=0.42000000000000004, kept=+0.0196)
+S2 no weights: no positive configuration
+S2 Richert   : no positive configuration
+S3 no weights: smallest Omega(n1 n2) bound k =  71  (delta=0.24, alpha=0.028, lam=0.000, beta1=None, kept=+0.0271)
+S3 Richert   : smallest Omega(n1 n2) bound k =  23  (delta=0.24, alpha=0.008, lam=0.068, beta1=0.22000000000000003, kept=+0.0120)
