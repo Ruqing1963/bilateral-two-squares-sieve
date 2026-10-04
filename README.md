@@ -1,5 +1,7 @@
 # Even integers as sums of two sums of two squares with few prime factors
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23137626.svg)](https://doi.org/10.5281/zenodo.23137626)
+
 **Author:** Ruqing Chen, GUT Geoservice Inc., Montreal, Canada (ruqing@hotmail.com)
 
 Companion project to
@@ -59,6 +61,23 @@ results/               outputs of certify.py and scan.py
 ```
 
 Requirements: Python ≥ 3.9, numpy, mpmath. Reproduce: `cd code && python certify.py`.
+
+## Citation
+
+```bibtex
+@misc{Chen2026BilateralTwoSquares,
+  author = {Chen, Ruqing},
+  title  = {Even integers as sums of two sums of two squares with few prime factors},
+  year   = {2026},
+  doi    = {10.5281/zenodo.23137626},
+  url    = {https://doi.org/10.5281/zenodo.23137626}
+}
+```
+
+## AI assistance
+
+Parts of the computations and of the draft were produced with the help of the Claude language model.
+The author is responsible for the content.
 
 ## License
 

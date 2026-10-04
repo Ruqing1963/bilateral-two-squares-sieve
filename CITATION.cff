@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Even integers as sums of two sums of two squares with few prime factors"
+authors:
+  - family-names: Chen
+    given-names: Ruqing
+    affiliation: "GUT Geoservice Inc., Montreal, Canada"
+    email: ruqing@hotmail.com
+date-released: 2026-10-04
+doi: 10.5281/zenodo.23137626
+license: MIT
+type: software
+repository-code: "https://github.com/Ruqing1963/bilateral-two-squares-sieve"
+keywords:
+  - linear sieve
+  - semi-linear sieve
+  - vector sieve
+  - sums of two squares
+  - almost primes
+  - binary additive problems
+  - interval arithmetic
