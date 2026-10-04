@@ -3,6 +3,10 @@
 \usepackage[margin=1.1in]{geometry}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+\raggedbottom
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -181,7 +185,7 @@ $s_I=\theta_I/(1/2-\delta)$, which is $\approx3.62$ for the parameters of Theore
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.70\textwidth]{figure1_linear_sieve.pdf}
+\includegraphics[width=0.65\textwidth]{figures/figure1_linear_sieve.pdf}
 \caption{The linear sieve functions $F_1(s)$ and $f_1(s)$ ($\kappa=1$, $\beta=2$). The lower bound function
 vanishes for $s\le2$. The dashed line marks the working point $s_I=0.9220/(1/2-0.245)\approx3.62$ of the
 inert sieve in the proof of Theorem~\ref{thm:main}.}
@@ -276,7 +280,7 @@ U=\min_{0<t<1/2}F_{1/2}\Bigl(\frac{t}{1/2-\delta}\Bigr)F_{1/2}\Bigl(\frac{1/2-t}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.58\textwidth]{figure2_switching_domain.pdf}
+\includegraphics[width=0.54\textwidth]{figures/figure2_switching_domain.pdf}
 \caption{The switching region for $\delta=0.245$, $\alpha=0.016$, in the coordinates $u_i=\log q_i/\log N$:
 $\frac12-\delta\le u_1<u_2$ and $u_1+u_2\le1-\mu$, where $m=N^{\mu}$ with $\mu=0$ ($m=1$) or
 $\mu\ge\alpha$. By Lemma~\ref{lem:structure} the triple $q_1q_2m$ lies entirely in $n$ (the set
@@ -324,44 +328,31 @@ $W-\#\cE\ge(\mathrm{net}+o(1))XV$ with
 \mathrm{net}=L-\lambda R-4c(\delta,\alpha)e^{\gamma}\sqrt{\alpha(1/2-\delta)}\,U .
 \]
 By Lemma~\ref{lem:omega}, every squarefree counted $n$ with $w_n>0$ satisfies
-$\Omega(n(N-n))<1/\lambda+2/\beta_1$. We use the two parameter sets of Table~\ref{tab:cert}; in both,
-$1/\lambda+2/\beta_1$ is an integer, computed in exact rational arithmetic.
+$\Omega(n(N-n))<1/\lambda+2/\beta_1$ and $\max(\Omega(n),\Omega(N-n))<1/\lambda+1/\beta_1$. We use the
+parameter sets of Table~\ref{tab:cert}; the quantities $1/\lambda+2/\beta_1$ ($=12$, $13$, $3280/267$) and
+$1/\lambda+1/\beta_1$ ($=2390/267<9$ in the third line) are computed in exact rational arithmetic.
 
 \begin{table}[ht]
 \centering
+\small
 \begin{tabular}{cccccccccc}
 \hline
 $\delta$ & $\alpha$ & $\lambda$ & $\beta_1$ & $k$ & $L\ge$ & $R\le$ & $c\le$ & $U\le$ & $\mathrm{net}\ge$\\
 \hline
 $0.245$ & $0.016$ & $1/8$ & $1/2$ & $11$ & $0.944016$ & $2.830154$ & $1.067736$ & $1.134620$ & $0.038949$\\
 $0.22$ & $0.010$ & $1/8$ & $2/5$ & $12$ & $0.913373$ & $3.144708$ & $1.092388$ & $1.166735$ & $0.039811$\\
+$0.24$ & $0.022$ & $89/500$ & $3/10$ & $12\,(8)$ & $0.919835$ & $1.939896$ & $0.878693$ & $1.166966$ & $0.022031$\\
 \hline
 \end{tabular}
 \medskip
-\caption{Certified bounds. Here $k=\lceil 1/\lambda+2/\beta_1\rceil-1$; the linear sieve level split is
-$\theta_I=0.9220$ resp.\ $0.9495$.}
+\caption{Certified bounds. Here $k=\lceil 1/\lambda+2/\beta_1\rceil-1$ bounds $\Omega(n(N-n))$; in the third line
+$(8)$ is the bound $\lceil1/\lambda+1/\beta_1\rceil-1$ for $\max(\Omega(n),\Omega(N-n))$. The linear sieve level
+split is $\theta_I=0.9220$, $0.9495$, $0.8965$.}
 \label{tab:cert}
 \end{table}
 
-For Corollary~\ref{cor:side} we use $\delta=0.24$, $\alpha=0.022$, $\lambda=89/500$, $\beta_1=3/10$, so that
-$1/\lambda+1/\beta_1=2390/267<9$ and $1/\lambda+2/\beta_1=3280/267<13$.
-
-\begin{table}[ht]
-\centering
-\begin{tabular}{ccccccccc}
-\hline
-$\theta_I$ & $\max\Omega(n_i)$ & $\Omega(n_1n_2)$ & $L\ge$ & $R\le$ & $c\le$ & $U\le$ & $\mathrm{net}\ge$ & constant\\
-\hline
-$0.8965$ & $8$ & $12$ & $0.919835$ & $1.939896$ & $0.878693$ & $1.166966$ & $0.022031$ & $0.6070$\\
-\hline
-\end{tabular}
-\medskip
-\caption{Certified bounds for the parameters of Corollary~\ref{cor:side}.}
-\label{tab:side}
-\end{table}
-
 \begin{lemma}\label{lem:numerics}
-The bounds of Tables~\ref{tab:cert} and~\ref{tab:side} hold.
+The bounds of Table~\ref{tab:cert} hold.
 \end{lemma}
 
 \begin{proof}[Method of verification]
@@ -402,7 +393,7 @@ and $\Omega(n(N-n))\le 11$.
 \end{proof}
 
 \begin{proof}[Proof of Corollary~\ref{cor:side}]
-The same argument with the parameters of Table~\ref{tab:side} gives at least
+The same argument with the third line of Table~\ref{tab:cert} gives at least
 \[
 \bigl(0.022031+o(1)\bigr)\frac{e^{-2\gamma}}{2\cdot0.022\cdot0.26}\,\Sg(N)\frac{N}{(\log N)^2}
 \ \ge\ \frac35\,\Sg(N)\frac{N}{(\log N)^2}
@@ -444,6 +435,25 @@ $v_2(N)=3$ take $n\equiv2\pmod{16}$, so that $n/2\equiv1$ and $(N-n)/2\equiv3\pm
 enumeration (script \texttt{code/local\_conditions.py}) that these are the minimal costs.
 \end{proof}
 
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{llll}
+\hline
+$\Delta$ & $Q_\Delta$ & $k_\Delta(N)=11$ & $k_\Delta(N)=12,13$\\
+\hline
+$-3$ & $x^2+xy+y^2$ & $N\equiv2\ (3)$ & $12$: $N\equiv1\ (3)$;\ $13$: $N\equiv6\ (9)$\\
+$-4$ & $x^2+y^2$ & $N\equiv2\ (4)$ & $13$: $N\equiv4\ (8)$\\
+$-7$ & $x^2+xy+2y^2$ & $7\nmid N$ & $13$: $7\,\|\,N$\\
+$-8$ & $x^2+2y^2$ & $v_2(N)\le2$ & $13$: $v_2(N)=3$\\
+$-11,-19,-43,-67,-163$ & $x^2+xy+\frac{1-\Delta}{4}y^2$ & $r\nmid N$ & $13$: $r\,\|\,N$\\
+\hline
+\end{tabular}
+\medskip
+\caption{The bound $k_\Delta(N)$ of Theorem~\ref{thm:general} ($N$ even).}
+\label{tab:general}
+\end{table}
+
 \begin{proof}[Proof of Theorem~\ref{thm:general}]
 Let $M,a,e,e'$ be as in Lemma~\ref{lem:admissible}, $\cA_\Delta=\{a_n=n(N-n):\ n\le N,\ n\equiv a\ (M)\}$ and
 $X=N/M$. For $d$ coprime to $M$, $d\mid a_n$ restricts $n$ to $\rho(d)$ classes modulo $Md$, so
@@ -475,35 +485,15 @@ since $\Sg_M(N)$ and $\Sg(N)$ differ only in the local factors at the primes div
 $M=4$, one has $\frac{M}{\varphi(M)^2}\Sg_M(N)=\frac12\Sg(N)$, recovering Proposition~\ref{prop:W}.
 \end{proof}
 
-\begin{table}[ht]
-\centering
-\small
-\begin{tabular}{llll}
-\hline
-$\Delta$ & $Q_\Delta$ & $k_\Delta(N)=11$ & $k_\Delta(N)=12,13$\\
-\hline
-$-3$ & $x^2+xy+y^2$ & $N\equiv2\ (3)$ & $12$: $N\equiv1\ (3)$;\ $13$: $N\equiv6\ (9)$\\
-$-4$ & $x^2+y^2$ & $N\equiv2\ (4)$ & $13$: $N\equiv4\ (8)$\\
-$-7$ & $x^2+xy+2y^2$ & $7\nmid N$ & $13$: $7\,\|\,N$\\
-$-8$ & $x^2+2y^2$ & $v_2(N)\le2$ & $13$: $v_2(N)=3$\\
-$-11,-19,-43,-67,-163$ & $x^2+xy+\frac{1-\Delta}{4}y^2$ & $r\nmid N$ & $13$: $r\,\|\,N$\\
-\hline
-\end{tabular}
-\medskip
-\caption{The bound $k_\Delta(N)$ of Theorem~\ref{thm:general} ($N$ even). Higher powers of the ramified prime
-in $N$ force further factors of $r$ and are not covered.}
-\label{tab:general}
-\end{table}
 
-\section*{Data and code availability}
+
+\enlargethispage{3\baselineskip}
+\section*{Data availability and acknowledgements}
 The verification script \texttt{certify.py}, the exploratory scan and their outputs are archived at
-\href{https://doi.org/10.5281/zenodo.23137626}{doi:10.5281/zenodo.23137626} and available at
-\begin{center}
+\href{https://doi.org/10.5281/zenodo.23137626}{doi:10.5281/zenodo.23137626} and available at\\
 \url{https://github.com/Ruqing1963/bilateral-two-squares-sieve}.
-\end{center}
 
-\section*{Acknowledgements}
-During the preparation of this work, the author utilized the Claude language model and the
+\indent During the preparation of this work, the author utilized the Claude language model and the
 \texttt{mpmath} Python library for computer-assisted interval arithmetic verification of the sieve
 integrals in Section~\ref{sec:numerics}. All analytical derivations and proofs were independently audited
 and verified by the author.

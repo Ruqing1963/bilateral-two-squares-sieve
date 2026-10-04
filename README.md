@@ -35,7 +35,7 @@ n₁ = n₂ = 2^{j−1}), so a general statement should count the prime factors 
 
 ## Status
 
-Draft preprint (paper/, 9 pages). The final numerical inequality is certified with outward-rounded
+Draft preprint (paper/, 8 pages). The final numerical inequality is certified with outward-rounded
 interval arithmetic. The sieve lemmas are written out in the draft but have **not yet been independently
 refereed**. A web literature search (Hooley, Indlekofer, Blomer, Brüdern–Fouvry, Blomer–Grimmelt–Li–Rydin
 Myerson) found no overlapping result; a database (MathSciNet/zbMATH) search has not been done.
@@ -73,8 +73,8 @@ singular series cancels exactly. Richert's weights act on n(N − n) jointly.
 ## Layout
 
 ```
-paper/Chen2026b_BilateralTwoSquares.tex / .pdf   draft paper (9 pages)
-paper/figure1_linear_sieve.pdf, figure2_switching_domain.pdf   Figures 1-2 (vector PDF)
+paper/Chen2026b_BilateralTwoSquares.tex / .pdf   draft paper (8 pages)
+paper/figures/figure1_linear_sieve.pdf, figure2_switching_domain.pdf   Figures 1-2 (vector PDF)
 code/plot_figures.py   regenerates Figures 1-2 (illustrative, floating point)
 code/certify.py        interval-arithmetic certification of the three parameter sets (~20 s)
 code/local_conditions.py  local conditions for the nine discriminants (Table 3 of the paper)

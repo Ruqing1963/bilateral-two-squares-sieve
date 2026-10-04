@@ -1,7 +1,7 @@
 """
 Figures for the paper (illustrative, floating point; not part of the certified computation).
-  paper/figure1_linear_sieve.pdf      F_1, f_1 with the threshold s = 2 and the working points s_I, s_S
-  paper/figure2_switching_domain.pdf  the switching region in the (u1, u2) plane, q_i = N^{u_i}
+  paper/figures/figure1_linear_sieve.pdf      F_1, f_1 with the threshold s = 2 and the working points s_I, s_S
+  paper/figures/figure2_switching_domain.pdf  the switching region in the (u1, u2) plane, q_i = N^{u_i}
 Run from the repository root:  python code/plot_figures.py
 """
 import os
@@ -13,7 +13,8 @@ from matplotlib.patches import Polygon
 from sieve_core import F_lin, f_lin
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROOT, "paper")
+OUT = os.path.join(ROOT, "paper", "figures")
+os.makedirs(OUT, exist_ok=True)
 plt.rcParams["pdf.fonttype"] = 42
 
 # certified parameter set for k = 11 (see code/certify.py)
