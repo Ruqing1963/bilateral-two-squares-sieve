@@ -2,6 +2,7 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage[margin=1.1in]{geometry}
 \usepackage{hyperref}
+\usepackage{graphicx}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -137,6 +138,19 @@ $f_{1/2}$ \cite{IwaniecHalf}. The vector sieve inequality \cite{BF} is
 $ab\ge a^-b^++a^+b^--a^+b^+$ for $a,b\in\{0,1\}$, $a^-\le a\le a^+$, $b^-\le b\le b^+$, $a^+,b^+\ge0$.
 The Bombieri--Vinogradov theorem for convolutions is used as in \cite[Lemma~2.4]{Chen1}.
 
+Figure~\ref{fig:linear} shows $F_1$ and $f_1$. Sifting the primes $q\equiv3\pmod4$ up to $N^{1/2}$ at
+level $N$ would give $s=2$, where $f_1$ vanishes; with $y=N^{1/2-\delta}$ the working point moves to
+$s_I=\theta_I/(1/2-\delta)$, which is $\approx3.62$ for the parameters of Theorem~\ref{thm:main}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.78\textwidth]{figure1_linear_sieve.pdf}
+\caption{The linear sieve functions $F_1(s)$ and $f_1(s)$ ($\kappa=1$, $\beta=2$). The lower bound function
+vanishes for $s\le2$. The dashed line marks the working point $s_I=0.9220/(1/2-0.245)\approx3.62$ of the
+inert sieve in the proof of Theorem~\ref{thm:main}.}
+\label{fig:linear}
+\end{figure}
+
 %=====================================================================================================
 \section{The weighted sieve and switching}\label{sec:switch}
 
@@ -220,9 +234,19 @@ U=\min_{0<t<1/2}F_{1/2}\Bigl(\frac{t}{1/2-\delta}\Bigr)F_{1/2}\Bigl(\frac{1/2-t}
 \]
 \end{proposition}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.66\textwidth]{figure2_switching_domain.pdf}
+\caption{The switching region for $\delta=0.245$, $\alpha=0.016$, in the coordinates $u_i=\log q_i/\log N$:
+$\frac12-\delta\le u_1<u_2$ and $u_1+u_2\le1-\mu$, where $m=N^{\mu}$ with $\mu=0$ ($m=1$) or
+$\mu\ge\alpha$. By Lemma~\ref{lem:structure} the triple $q_1q_2m$ lies entirely in $n$ (the set
+$\cE_1$) or entirely in $N-n$ (the set $\cE_2$).}
+\label{fig:switch}
+\end{figure}
+
 \begin{proof}
 Write $\cE=\cE_1\cup\cE_2$ according as the exceptional pair lies in $n$ or in $N-n$; the two cases are
-symmetric, which accounts for a factor $2$. Consider $\cE_1$. Let $\cT$ be the set of triples
+symmetric, which accounts for a factor $2$ (Figure~\ref{fig:switch}). Consider $\cE_1$. Let $\cT$ be the set of triples
 $(q_1,q_2,m)$ as in Lemma~\ref{lem:structure}(ii) with $t=q_1q_2m\le N$, so that
 $|\cT|=(c(\delta,\alpha)+o(1))N/\log N$ as in \cite{Chen1}; note $t\equiv1\pmod4$ automatically.
 Every $n\in\cE_1$ equals such a $t$, and $N-t$ has no prime factor in $P$. Hence $\#\cE_1$ is at most the

@@ -53,7 +53,9 @@ singular series cancels exactly. Richert's weights act on n(N − n) jointly.
 ## Layout
 
 ```
-paper/Chen2026b_BilateralTwoSquares.tex / .pdf   draft paper
+paper/Chen2026b_BilateralTwoSquares.tex / .pdf   draft paper (7 pages)
+paper/figure1_linear_sieve.pdf, figure2_switching_domain.pdf   Figures 1-2 (vector PDF)
+code/plot_figures.py   regenerates Figures 1-2 (illustrative, floating point)
 code/certify.py        interval-arithmetic certification of both parameter sets (~15 s)
 code/sieve_core.py     floating-point sieve functions and switching density
 code/scan.py           schemes S1-S3 and parameter scan (~40 s)
